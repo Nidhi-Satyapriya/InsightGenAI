@@ -4,3 +4,4 @@ crewAI
 crewai-tools
 pydantic
 langchain
+protobuf==3.20.*

@@ -7,12 +7,32 @@ Original file is located at
     https://colab.research.google.com/drive/1p8fZOXF-CY_NdA7_BbR6JvZs6ro4D6i-
 """
 
-#pip install transformers langchain crewai pydantic
+# pip install transformers langchain crewai pydantic
+import subprocess
+import sys
+
+def install_dependencies():
+    # List of dependencies
+    dependencies = [
+        "transformers",
+        "langchain",
+        "crewai",
+        "pydantic"
+    ]
+    
+    for _ in dependencies:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "protobuf==3.20.*"])
+
+# Call the function to install dependencies
+if __name__ == "__main__":
+    install_dependencies()
+
 
 import os
 from transformers import pipeline
 from crewai import Agent, Task, Crew
-from crewai_tools import DirectoryReadTool, FileReadTool, SerperDevTool, WebsiteSearchTool
+from crewai_tools import DirectoryReadTool, FileReadTool, SerperDevTool
+
 
 # Define a custom Hugging Face agent
 class HuggingFaceAgent(Agent):
@@ -122,11 +142,33 @@ def run_company_analysis(company_name):
         print("Output:\n", output)
         print("\n" + "-"*300 + "\n")
 
-# Run analysis for a specific company, 
-run_company_analysis("Google")
+# # Run analysis for a specific company, 
+# run_company_analysis("Google")
 
-# Run analysis for a specific company,
-run_company_analysis("Microsoft")
+# # Run analysis for a specific company,
+# run_company_analysis("Microsoft")
 
-# Run analysis for a specific company, 
-run_company_analysis("Amazon")
+# # Run analysis for a specific company, 
+# run_company_analysis("Amazon")
+
+import streamlit as st
+from transformers import pipeline
+
+def run_company_analysis(company_name):
+    st.write(f"## Multi-Agent Analysis for {company_name}")
+    agents = setup_agents(company_name)
+    tasks = create_tasks(company_name, agents)
+    crew = Crew(tasks=tasks)
+    
+    for task in crew.tasks:
+        st.write(f"### Task: {task.description}")
+        output = task.agent.run(task.description, model_name="gpt2")
+        st.write("Output:\n", output)
+        st.write("---")
+
+# Streamlit user input to specify the company name
+st.title("Multi-Agent Industry Analysis System")
+company_name = st.text_input("Enter a company name for analysis:", "Amazon")
+
+if st.button("Run Analysis"):
+    run_company_analysis(company_name)
