@@ -8,24 +8,24 @@ Original file is located at
 """
 
 # pip install transformers langchain crewai pydantic
-import subprocess
-import sys
+# import subprocess
+# import sys
 
-def install_dependencies():
-    # List of dependencies
-    dependencies = [
-        "transformers",
-        "langchain",
-        "crewai",
-        "pydantic"
-    ]
+# def install_dependencies():
+#     # List of dependencies
+#     dependencies = [
+#         "transformers",
+#         "langchain",
+#         "crewai",
+#         "pydantic"
+#     ]
     
-    for _ in dependencies:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "protobuf==3.20.*"])
+#     for _ in dependencies:
+#         subprocess.check_call([sys.executable, "-m", "pip", "install", "protobuf==3.20.*"])
 
-# Call the function to install dependencies
-if __name__ == "__main__":
-    install_dependencies()
+# # Call the function to install dependencies
+# if __name__ == "__main__":
+#     install_dependencies()
 
 
 import os
