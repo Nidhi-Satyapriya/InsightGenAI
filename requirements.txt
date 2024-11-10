@@ -1,0 +1,6 @@
+streamlit
+transformers
+crewAI  
+crewai-tools
+pydantic
+langchain
